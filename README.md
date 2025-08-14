@@ -1,3 +1,3 @@
-# Coding Journal
+# Algorithms
 
-A personal archive of coding problems, solutions, etc.
+A personal archive of algorithm implementations, leetcode and various other online platforms coding problems.
