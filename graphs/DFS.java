@@ -4,25 +4,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DFS {
-    public static List<Integer> traverse(Graph g, int startVertex) {
-        if (startVertex < 0 || startVertex >= g.vertexCount()) {
-            throw new IllegalArgumentException();
+    public static List<Integer> traverse(int n, int[][] edges, int startVertex) {
+        List<List<Integer>> graph = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            graph.add(new ArrayList<>());
+        }
+
+        for (int[] e : edges) {
+            graph.get(e[0]).add(e[1]);
         }
 
         List<Integer> result = new ArrayList<>();
-        boolean[] visited = new boolean[g.vertexCount()];
-        dfsRecurse(g, visited, result, startVertex);
+
+        aux(graph, new boolean[n], result, startVertex);
+
         return result;
     }
 
-    private static void dfsRecurse(Graph g, boolean[] visited, List<Integer> result, int v) {
-        result.add(v);
+    private static void aux(
+        List<List<Integer>> graph,
+        boolean[] visited,
+        List<Integer> result,
+        int v
+    ) {
         visited[v] = true;
+        result.add(v);
 
-        for (int neighbor: g.neighbors(v)) {
-            if (!visited[neighbor]) {
-                dfsRecurse(g, visited, result, neighbor);
-            }
+        for (int nei : graph.get(v)) {
+            if (!visited[nei]) 
+                aux(graph, visited, result, nei);
         }
     }
 }

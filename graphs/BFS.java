@@ -6,26 +6,31 @@ import java.util.List;
 import java.util.Queue;
 
 public class BFS {
-    public static List<Integer> traverse(Graph g, int startVertex) {
-        if (startVertex < 0 || startVertex >= g.vertexCount()) {
-            throw new IllegalArgumentException();
+    public static List<Integer> traverse(int n, int[][] edges, int startVertex) {
+        List<List<Integer>> graph = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            graph.add(new ArrayList<>());
         }
 
+        for (int[] e : edges) {
+            graph.get(e[0]).add(e[1]);
+        }
+
+        Queue<Integer> queue = new ArrayDeque<>();
         List<Integer> result = new ArrayList<>();
-        boolean[] visited = new boolean[g.vertexCount()];
-        Queue<Integer> q = new ArrayDeque<>();
+        boolean[] visited = new boolean[n];
 
+        queue.offer(startVertex);
         visited[startVertex] = true;
-        q.add(startVertex);
 
-        while (!q.isEmpty()) {
-            int vertex = q.poll();
-            result.add(vertex);
+        while (!queue.isEmpty()) {
+            int v = queue.poll();
+            result.add(v);
 
-            for (int neighbor: g.neighbors(vertex)) {
-                if (!visited[neighbor]) {
-                    visited[neighbor] = true;
-                    q.add(neighbor);
+            for (int nei : graph.get(v)) {
+                if (!visited[nei]) {
+                    queue.offer(nei);
+                    visited[nei] = true;
                 }
             }
         }
