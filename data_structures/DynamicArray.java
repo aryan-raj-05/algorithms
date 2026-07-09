@@ -1,54 +1,56 @@
 package data_structures;
 
-public class DynamicArray<T> {
-    private Object[] array;
+public class DynamicArray {
+    private int[] arr;
     private int size;
 
-    private static final int INIT_CAPACITY = 16;
-
     public DynamicArray() {
-        array = new Object[INIT_CAPACITY];
+        arr = new int[16];
         size = 0;
     }
 
-    public void add(T x) {
-        if (size == array.length) {
-            int newCapacity = array.length * 2;
-            var newArray = new Object[newCapacity];
-            System.arraycopy(array, 0, newArray, 0, size);
-            array = newArray;
+    public void addLast(int x) {
+        if (size == arr.length) {
+            resize();
         }
-        array[size++] = x;
+        arr[size++] = x;
     }
 
-    @SuppressWarnings("unchecked")
-    public T remove() {
+    public int removeLast() {
         if (size == 0) {
             throw new IllegalStateException("Array is Empty");
         }
-        T removed = (T) array[--size];
-        array[size] = null;
-        return removed;
+
+        return arr[--size];
     }
 
-    @SuppressWarnings("unchecked")
-    public T get(int index) {
+    public int get(int index) {
         indexCheck(index);
-        return (T) array[index];
+        return arr[index];
     }
 
-    public void set(int index, T value) {
+    public void set(int index, int value) {
         indexCheck(index);
-        array[index] = value;
+        arr[index] = value;
     }
 
-    public int length() {
+    public int size() {
         return size;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
     }
 
     private void indexCheck(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
+    }
+
+    private void resize() {
+        int[] newArr = new int[arr.length * 2];
+        System.arraycopy(arr, 0, newArr, 0, size);
+        arr = newArr;
     }
 }
