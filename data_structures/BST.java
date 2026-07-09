@@ -1,16 +1,14 @@
 package data_structures;
 
-public class BST implements Tree {
+public class BST {
     private Node head;
 
     public BST() {}
 
-    @Override
     public void insert(int x) {
         head = auxInsert(head, x);
     }
 
-    @Override
     public boolean search(int x) {
         Node iter = head;
         while (iter != null) {
@@ -25,7 +23,6 @@ public class BST implements Tree {
         return false;
     }
 
-    @Override
     public void delete(int x) {
         head = auxRemove(head, x);
     }
